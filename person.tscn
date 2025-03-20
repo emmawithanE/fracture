@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b301p4w4uvdgh"]
+
+[ext_resource type="Texture2D" uid="uid://bark1c7lfmhrv" path="res://person.png" id="1_xw84q"]
+[ext_resource type="Script" uid="uid://6os8icbh0hu0" path="res://person.gd" id="1_ywgw4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7gn34"]
+radius = 14.0
+
+[node name="Person" type="Area2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_ywgw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7gn34")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_xw84q")

@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://gd62tuwp38m8"]
+[gd_scene load_steps=7 format=4 uid="uid://gd62tuwp38m8"]
 
 [ext_resource type="Texture2D" uid="uid://bvobtcju8ncms" path="res://autotile_template_3x3_minimal.png" id="1_k2u83"]
-[ext_resource type="Script" uid="uid://b01gjpm8pef76" path="res://node_2d.gd" id="1_mglh2"]
-[ext_resource type="Script" uid="uid://b64jxhfcqwiqj" path="res://pathfinder.gd" id="2_ggrmm"]
-[ext_resource type="Script" uid="uid://58jncjvmg0no" path="res://debug_draw_a_star.gd" id="3_og2xy"]
-[ext_resource type="PackedScene" uid="uid://b301p4w4uvdgh" path="res://person.tscn" id="5_ebmiw"]
+[ext_resource type="Script" path="res://node_2d.gd" id="1_mglh2"]
+[ext_resource type="Script" path="res://pathfinder.gd" id="2_ggrmm"]
+[ext_resource type="Script" path="res://debug_draw_a_star.gd" id="3_og2xy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2xeh1"]
 resource_name = "template"
@@ -1069,9 +1068,8 @@ terrain_set_0/terrain_0/name = "walkable"
 terrain_set_0/terrain_0/color = Color(3.85046e-07, 0.631452, 0.305417, 1)
 sources/0 = SubResource("TileSetAtlasSource_2xeh1")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jygbs"]
-
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_mglh2")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
@@ -1084,22 +1082,3 @@ script = ExtResource("2_ggrmm")
 
 [node name="DebugDrawAStar" type="Node2D" parent="."]
 script = ExtResource("3_og2xy")
-
-[node name="DragSelector" type="Area2D" parent="."]
-process_physics_priority = 1
-collision_mask = 3
-script = ExtResource("1_mglh2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DragSelector"]
-shape = SubResource("RectangleShape2D_jygbs")
-
-[node name="PersonParent" type="Node2D" parent="."]
-
-[node name="Person" parent="PersonParent" instance=ExtResource("5_ebmiw")]
-position = Vector2(1272, 148)
-
-[node name="Person2" parent="PersonParent" instance=ExtResource("5_ebmiw")]
-position = Vector2(1446, 299)
-
-[node name="Person3" parent="PersonParent" instance=ExtResource("5_ebmiw")]
-position = Vector2(1282, 240)
