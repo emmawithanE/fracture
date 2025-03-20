@@ -2,7 +2,7 @@ extends Area2D
 
 var dragging := false
 var drag_start := Vector2.ZERO
-var selected := []
+var selected : Array[Person]= []
 var select_rect = RectangleShape2D.new()
 
 var make_selection := false
@@ -35,28 +35,33 @@ func _unhandled_input(event):
 		elif dragging:
 			dragging = false
 			queue_redraw()
+			for person in selected:
+				person.selected = false
+			selected.clear()
 			var drag_end = event.position
+			select_rect.extents = abs(drag_end - drag_start) / 2
 			
 			$CollisionShape2D.position = (drag_start + drag_end) / 2
 			$CollisionShape2D.shape.size = abs(drag_end - drag_start)
 			
 			
-			make_selection = true
+			#make_selection = true
 			#var colliders := get_overlapping_areas()
 			#for collider in colliders:
 				#if collider is Person:
 					#selected.append(collider)
 					#(collider as Person).selected = true
-			#var space = get_world_2d().direct_space_state
-			#var q = PhysicsShapeQueryParameters2D.new()
-			#q.shape = select_rect
-			#q.collision_mask = 2 # Put people on layer 2
-			#q.transform = Transform2D(0, (drag_end + drag_start) / 2)
-			#var selected_dicts = space.intersect_shape(q)
-			#for dict in selected_dicts:
-				#if dict.collider is Person:
-					#selected.append(dict.collider)
-					#dict.collider.selected = true
+			var space = get_world_2d().direct_space_state
+			var q = PhysicsShapeQueryParameters2D.new()
+			q.shape = select_rect
+			q.collision_mask = 2 # Put people on layer 2
+			q.collide_with_areas = true
+			q.transform = Transform2D(0, (drag_end + drag_start) / 2)
+			var selected_dicts = space.intersect_shape(q)
+			for dict in selected_dicts:
+				if dict.collider is Person:
+					selected.append(dict.collider)
+					dict.collider.selected = true
 	if event is InputEventMouseMotion and dragging:
 		queue_redraw()
 
